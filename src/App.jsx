@@ -1471,7 +1471,9 @@ function UsersPage({me,toast,onRefresh}){
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20}}>
         <div>
           <div style={{fontFamily:"'Syne',sans-serif",fontSize:20,fontWeight:800,letterSpacing:-0.5}}>Gestión de Usuarios</div>
-          <div style={{fontSize:11,color:C.t2,marginTop:2}}>{users.length} usuarios · {byRole.docente.length} docentes · {byRole.alumno.length} alumnos</div>
+          <div style={{fontSize:11,color:C.t2,marginTop:2}}>
+  {users.length} usuarios · {users.filter(u => (u.role || u.rol) === 'docente').length} docentes · {users.filter(u => (u.role || u.rol) === 'alumno').length} alumnos
+</div>
         </div>
         <Btn onClick={()=>{setForm({name:"",email:"",pass:"",role:"alumno",equipo:"PC-Alumno-0X",ip:"192.168.2.X"});setModal("new");}} color={C.blue}>+ Crear Usuario</Btn>
       </div>
