@@ -1459,21 +1459,20 @@ function UsersPage({me,toast,onRefresh}){
     setUsers(p=>p.filter(x=>x.id!==u.id));
     toast(`Usuario "${u.name}" eliminado`,"warning");
   };
-  {(form.role==="alumno"||form.role==="docente") && (
-  <Field label="Curso asignado" value={String(form.curso)} onChange={v=>setForm(p=>({...p,curso:Number(v)}))}
-  opts={COURSES.map(c=>String(c.id))}/>
-  )}
-  {(form.role==="alumno"||form.role==="docente") && (
-  <Field label="Curso asignado" value={String(form.curso)} onChange={v=>setForm(p=>({...p,curso:Number(v)}))}
-  opts={COURSES.map(c=>String(c.id))}/>
-  )}
+
+  const byRole = {
+    admin: users.filter(u => (u.role || u.rol) === "admin"),
+    docente: users.filter(u => (u.role || u.rol) === "docente"),
+    alumno: users.filter(u => (u.role || u.rol) === "alumno"),
+  };
+
   return(
     <div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20}}>
         <div>
           <div style={{fontFamily:"'Syne',sans-serif",fontSize:20,fontWeight:800,letterSpacing:-0.5}}>Gestión de Usuarios</div>
           <div style={{fontSize:11,color:C.t2,marginTop:2}}>
-  {users.length} usuarios · {users.filter(u => (u.role || u.rol) === 'docente').length} docentes · {users.filter(u => (u.role || u.rol) === 'alumno').length} alumnos
+{users.length} usuarios · {users.filter(u => (u.role || u.rol) === 'docente').length} docentes · {users.filter(u => (u.role || u.rol) === 'alumno').length} alumnos
 </div>
         </div>
         <Btn onClick={()=>{setForm({name:"",email:"",pass:"",role:"alumno",equipo:"PC-Alumno-0X",ip:"192.168.2.X"});setModal("new");}} color={C.blue}>+ Crear Usuario</Btn>
